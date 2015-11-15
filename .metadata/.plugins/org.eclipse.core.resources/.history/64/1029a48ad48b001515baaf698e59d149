@@ -1,0 +1,65 @@
+package socketexam;
+
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Client {
+	private static final String COMMAND_STOP_SERVER = "stopServer";
+	static List<String> currentlyLoggedUsers = new LinkedList<String>();
+	static Map<String, Integer> usersToLoginCount = new HashMap<String, Integer>();
+
+	private static Socket socket;
+
+	public Client(Socket socket) {
+		this.socket = socket;
+	}
+	
+	public static void info_command(String name,String lookingFor) throws IOException{
+		final PrintStream out =	new PrintStream(socket.getOutputStream());
+		if(currentlyLoggedUsers.contains(name)){
+			String displayInfo="ok:"+lookingFor;
+			if(currentlyLoggedUsers.contains(lookingFor)){
+				displayInfo+=":true:";
+			} else {
+				displayInfo+=":false:";
+			};
+			if(usersToLoginCount.get(lookingFor)==null){
+				displayInfo+="0";
+			} else {
+				displayInfo+=usersToLoginCount.get(lookingFor);
+			}
+			out.println(displayInfo);
+		} else {
+			out.println("error:notlogged");	
+		}	
+	}
+	
+	public void run() {
+		try {
+			final PrintStream out =	new PrintStream(socket.getOutputStream());
+			final Scanner scanner =	new Scanner(socket.getInputStream());
+			while (scanner.hasNextLine()) {
+				final String line = scanner.nextLine();
+				if (COMMAND_STOP_SERVER.equals(line)) {
+					break;
+				}
+				final String separetedLine[]=line.split(":");
+				if (separetedLine[1].equals("info")){
+					info_command(separetedLine[0],separetedLine[2]);
+				}
+				out.println(line);
+			}
+			scanner.close();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

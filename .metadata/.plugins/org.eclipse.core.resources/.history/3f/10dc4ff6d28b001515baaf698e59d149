@@ -1,0 +1,74 @@
+package socketexam;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Server {
+	private final int port;
+	private boolean running;
+	private final List<Client> clients = Collections.synchronizedList(new LinkedList<Client>());
+	private ServerSocket serverSocket;
+
+	public Server(int port) {
+		this.port = port;
+	}
+
+	public void startServer() throws IOException {
+		final ServerSocket localServerSocket = createServerSocket();
+		
+		// to synchronize access to the variable 'running'
+		while(isRunning()) {
+			final Socket socket;
+			try {
+				socket = localServerSocket.accept();
+			} catch (SocketException e) {
+				if (!localServerSocket.isClosed()) {
+					throw e;
+				}
+				break;
+			}
+
+			final Client client = new Client(this, socket);
+			clients.add(client);
+			new Thread().start();
+		}
+	}
+
+	private synchronized ServerSocket createServerSocket() throws IOException {
+		if (running) {
+			throw new IllegalStateException("Already running");
+		}
+
+		running = true;
+		serverSocket = new ServerSocket(port);
+		return serverSocket;
+	}
+	
+	public synchronized boolean isRunning() {
+		return running;
+	}
+
+	public synchronized void stopServer() throws IOException {
+		if (!running) {
+			throw new IllegalStateException("Not running");
+		}
+
+		running = false;
+		
+		serverSocket.close();
+		serverSocket = null;
+		
+		for (Client next : clients) {
+			next.stopClient();
+		}
+	}
+
+	public void onClientStopped(Client clientHandler) {
+		clients.remove(clientHandler);
+	}
+}
