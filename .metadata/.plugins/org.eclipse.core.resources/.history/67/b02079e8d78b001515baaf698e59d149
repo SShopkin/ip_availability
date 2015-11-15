@@ -11,11 +11,13 @@ public class Server {
 	}
 
 	public void startServer() throws IOException {
-		final ServerSocket serverSocket = new ServerSocket(port);
-		final Socket socket = serverSocket.accept();		
-		final Client client = new Client(socket);
+		final ServerSocket serverSocket =
+			new ServerSocket(port);
+		final Socket socket = serverSocket.accept();
 		
-		client.run();		
+		final Client client = new Client(socket);
+		client.run();
+		
 		serverSocket.close();
 	}
 

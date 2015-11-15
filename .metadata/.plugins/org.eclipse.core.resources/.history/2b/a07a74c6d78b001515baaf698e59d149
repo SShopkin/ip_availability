@@ -80,16 +80,20 @@ public class Client {
 					break;
 				}
 				final String separetedLine[]=line.split(":");
-				if (separetedLine[1].equals("login")) {
-					login_command(separetedLine[0]);
-				} else if (separetedLine[1].equals("logout")){
-					logout_command(separetedLine[0]);
+				final String command=separetedLine[1];
+				if (separetedLine[1].equals("info")) {
+					info_command(separetedLine[0],separetedLine[2]);
+				} else if (separetedLine[1].equals("info")){
+					info_command(separetedLine[0],separetedLine[2]);
 				} else if (separetedLine[1].equals("info")){
 					info_command(separetedLine[0],separetedLine[2]);
 				} else {
-					out.println("error:unknowncommand");
-				}							
+					System.out.println("error:unknowncommand");
+				}
+							
 			}
+				//out.println(line);
+			
 			scanner.close();
 			out.close();
 		} catch (IOException e) {

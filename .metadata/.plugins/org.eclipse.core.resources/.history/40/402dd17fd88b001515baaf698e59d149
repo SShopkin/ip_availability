@@ -90,6 +90,8 @@ public class Client {
 					out.println("error:unknowncommand");
 				}							
 			}
+				//out.println(line);
+			
 			scanner.close();
 			out.close();
 		} catch (IOException e) {

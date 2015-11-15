@@ -87,9 +87,11 @@ public class Client {
 				} else if (separetedLine[1].equals("info")){
 					info_command(separetedLine[0],separetedLine[2]);
 				} else {
-					out.println("error:unknowncommand");
+					System.out.println("error:unknowncommand");
 				}							
 			}
+				//out.println(line);
+			
 			scanner.close();
 			out.close();
 		} catch (IOException e) {
