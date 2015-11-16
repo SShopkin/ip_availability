@@ -53,13 +53,12 @@ public class Client {
 	
 	public String shutdown_command(String name) {
 		User user = server.getallusers().get(name);
-		if(user!=null){
-			if(user.isItLoged()){
-				user.stopSession();
-				return "Successful shutdown";
-			}				
+		if(user.isItLoged()){
+			user.stopSession();
+			return "Successful shutdown";
+		} else {
+			return"error:notlogged";	
 		}		
-		return"error:notlogged";
 	}
 	/*
 	public static void info_command(String name,String lookingFor) throws IOException{

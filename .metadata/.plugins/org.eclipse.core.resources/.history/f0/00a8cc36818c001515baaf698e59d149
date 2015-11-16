@@ -57,9 +57,9 @@ public class Client {
 			if(user.isItLoged()){
 				user.stopSession();
 				return "Successful shutdown";
-			}				
+			}	
+		return"error:notlogged";	
 		}		
-		return"error:notlogged";
 	}
 	/*
 	public static void info_command(String name,String lookingFor) throws IOException{

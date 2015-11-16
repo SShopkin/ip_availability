@@ -40,8 +40,10 @@ public class Client {
 		}
 		return "ok";
 	}
-
-	public String logout_command(String name){
+	
+	
+	
+	public String logout_command(String name) throws IOException{
 		User user = server.getallusers().get(name);
 		if(user.isItLoged()){
 			user.stopSession();
@@ -49,17 +51,6 @@ public class Client {
 		} else {
 			return"error:notlogged";	
 		}		
-	}
-	
-	public String shutdown_command(String name) {
-		User user = server.getallusers().get(name);
-		if(user!=null){
-			if(user.isItLoged()){
-				user.stopSession();
-				return "Successful shutdown";
-			}				
-		}		
-		return"error:notlogged";
 	}
 	/*
 	public static void info_command(String name,String lookingFor) throws IOException{
@@ -97,14 +88,9 @@ public class Client {
 					result=login_command(separetedLine[0]);					
 				} else if (separetedLine[1].equals("logout")){
 					result=logout_command(separetedLine[0]);
-				} else if (separetedLine[1].equals("shutdown")){
-					result=shutdown_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("info")){
 					//info_command(separetedLine[0],separetedLine[2]);
 				} 
-				if("Successful shutdown".equals(result)){
-					break;
-				}
 				out.println(result);
 				result="error:unknowncommand";
 			}
