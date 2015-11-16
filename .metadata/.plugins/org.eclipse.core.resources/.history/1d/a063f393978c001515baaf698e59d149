@@ -38,17 +38,11 @@ public class Client implements Runnable{
 		}		
 	}
 	
-	public String shutdown_command(String name) throws IOException {
+	public String shutdown_command(String name) {
 		User user = server.getallusers().get(name);
 		if(user!=null){
 			if(user.isItLoged()){
 				user.stopSession();
-				Map<String, User> users = server.getallusers();
-				for(Map.Entry<String, User> i : users.entrySet() ){
-					if(i.getValue().getSocket()!=null){
-						i.getValue().getSocket().close();
-					}
-				}
 				return "Successful shutdown";
 			}				
 		}		
@@ -111,16 +105,15 @@ public class Client implements Runnable{
 				} else if (separetedLine[1].equals("info")){
 					result=info_command(separetedLine[0],separetedLine[2]);
 				} 
-				if("Successful shutdown".equals(result)){					
+				if("Successful shutdown".equals(result)){
 					break;
 				}
 				out.println(result);
 				result="error:unknowncommand";
 			}
-			server.setRunning(false);
+			
 			scanner.close();
 			out.close();
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

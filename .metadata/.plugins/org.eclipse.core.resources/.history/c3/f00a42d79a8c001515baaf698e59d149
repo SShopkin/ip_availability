@@ -111,13 +111,14 @@ public class Client implements Runnable{
 				} else if (separetedLine[1].equals("info")){
 					result=info_command(separetedLine[0],separetedLine[2]);
 				} 
-				if("Successful shutdown".equals(result)){					
+				if("Successful shutdown".equals(result)){
+					server.setRunning(false);
 					break;
 				}
 				out.println(result);
 				result="error:unknowncommand";
 			}
-			server.setRunning(false);
+			
 			scanner.close();
 			out.close();
 			
