@@ -119,6 +119,12 @@ public class Client implements Runnable{
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			Server.onClientStopped(this);
+ 		}
+		
+		public void stopClient() throws IOException {
+			socket.close();
 		}
 	}
 }

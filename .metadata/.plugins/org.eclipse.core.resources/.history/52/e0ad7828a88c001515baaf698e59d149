@@ -17,6 +17,8 @@ public class Interval {
 	public void setTo(Date to) {
 		this.to = to;
 	}
+
+	//String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 	
 
 }

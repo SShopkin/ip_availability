@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Client implements Runnable{
+	private static final String COMMAND_STOP_SERVER = "stopServer";
 	private Server server;
 	private Socket socket;
 
@@ -95,6 +96,9 @@ public class Client implements Runnable{
 			final Scanner scanner =	new Scanner(socket.getInputStream());
 			while (scanner.hasNextLine()) {
 				final String line = scanner.nextLine();
+				if (COMMAND_STOP_SERVER.equals(line)) {
+					break;
+				}
 				final String separetedLine[]=line.split(":");
 				if (separetedLine[1].equals("login")) {
 					result=login_command(separetedLine[0]);					

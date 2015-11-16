@@ -1,0 +1,54 @@
+package socketexam;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+public class Server {
+	private final int port;
+	private Map<String, User> allusers = Collections.synchronizedMap(new HashMap<String, User>()); 
+	private boolean running;
+	private final List<Client> clients = Collections.synchronizedList(new LinkedList<Client>());
+	
+	
+	public Map<String, User> getallusers(){
+		return allusers;
+	}
+	
+	public Server(int port) {
+		this.port = port;
+	}
+
+	public void startServer() throws IOException {
+		setRunning(true);
+		final ServerSocket serverSocket = new ServerSocket(port);
+		while(running){
+			final Socket socket = serverSocket.accept();		
+			final Client client = new Client(socket,this);	
+			clients.add(client);
+			new Thread(client).start();	
+		}	
+		serverSocket.close();
+	}
+
+	public synchronized void setRunning(boolean run) {
+		running=run;		
+	}
+	
+	public synchronized void stopServer() throws IOException {
+		running = false;
+		
+		for (Client next : clients) {
+			next.stopClient();
+		}
+	}
+
+	public void onClientStopped(Client clientHandler) {
+		clients.remove(clientHandler);
+	}
+
+}

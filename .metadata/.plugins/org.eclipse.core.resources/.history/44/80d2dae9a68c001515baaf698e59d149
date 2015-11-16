@@ -107,7 +107,8 @@ public class Client implements Runnable{
 				} else if (separetedLine[1].equals("info")){
 					result=info_command(separetedLine[0],separetedLine[2]);
 				} 
-				if("Successful shutdown".equals(result)){					
+				if("Successful shutdown".equals(result)){	
+					//Server.stopServer();
 					break;
 				}
 				out.println(result);
@@ -119,6 +120,9 @@ public class Client implements Runnable{
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} finally {
+			Server.onClientStopped(this);
+ 		}		
 	}
+	
 }

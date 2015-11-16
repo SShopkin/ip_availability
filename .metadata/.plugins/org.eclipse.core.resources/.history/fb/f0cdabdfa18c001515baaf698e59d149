@@ -113,7 +113,9 @@ public class Client implements Runnable{
 				out.println(result);
 				result="error:unknowncommand";
 			}
+			System.out.println("1");
 			server.setRunning(false);
+			System.out.println("2");
 			scanner.close();
 			out.close();
 			

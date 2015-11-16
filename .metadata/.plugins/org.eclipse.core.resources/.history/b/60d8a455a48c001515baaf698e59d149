@@ -113,12 +113,18 @@ public class Client implements Runnable{
 				out.println(result);
 				result="error:unknowncommand";
 			}
-			server.setRunning(false);
+			server.setRunning();
 			scanner.close();
 			out.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			Server.onClientStopped(this);
+ 		}
+		
+		public void stopClient() throws IOException {
+			socket.close();
 		}
 	}
 }

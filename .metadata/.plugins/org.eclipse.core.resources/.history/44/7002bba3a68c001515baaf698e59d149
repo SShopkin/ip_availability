@@ -107,18 +107,23 @@ public class Client implements Runnable{
 				} else if (separetedLine[1].equals("info")){
 					result=info_command(separetedLine[0],separetedLine[2]);
 				} 
-				if("Successful shutdown".equals(result)){					
+				if("Successful shutdown".equals(result)){	
+					//Server.stopServer();
 					break;
 				}
 				out.println(result);
 				result="error:unknowncommand";
 			}
-			server.setRunning(false);
+			server.setRunning();
 			scanner.close();
-			out.close();
-			
+			out.close();			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} finally {
+			Server.onClientStopped(this);
+ 		}		
+	}
+	public void stopClient() throws IOException {
+		socket.close();
 	}
 }
