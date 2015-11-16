@@ -44,7 +44,7 @@ public class User {
 	}
 	
 	public String allTimes(){
-		String allDates="";
+		String allDates=null;
 		for(int i=0;i<times.size();i++){
 			allDates+=formatTime(times.get(i).getFrom());
 			allDates+=":";
@@ -53,17 +53,9 @@ public class User {
 		return allDates;
 	}
 	
-	public int getHowTimesIsLogin() {
-		return howTimesIsLogin;
-	}
-	
 	public String formatTime(Date time){
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH'_'mm'_'ss.SSSZ");
 		return dateformat.format(time);
-	}
-	
-	public String getName() {
-		return name;
 	}
 	
 }

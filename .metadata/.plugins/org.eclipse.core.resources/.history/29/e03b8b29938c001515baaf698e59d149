@@ -62,8 +62,4 @@ public class User {
 		return dateformat.format(time);
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
 }

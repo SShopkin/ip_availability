@@ -64,7 +64,24 @@ public class Client {
 		return "ok:"+lookingFor+":false:0";
 	}
 	
-	
+	public String listabsent_command(String name){
+		User user = server.getallusers().get(name);
+		Map<String, User> users = server.getallusers();
+		String result="ok";
+		if(user!=null){
+			if(user.isItLoged()){
+				for(Map.Entry<String, User> i : users.entrySet() ){
+					if(!i.getValue().isItLoged()){
+						result+=":"+i.getValue().getName();
+					}
+				}
+			}
+			return result;
+		} else {
+			return"error:notlogged";
+		}
+		
+	}
 	
 	public void run() {
 		try {
@@ -83,7 +100,9 @@ public class Client {
 					result=logout_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("shutdown")){
 					result=shutdown_command(separetedLine[0]);
-				}  else if (separetedLine[1].equals("info")){
+				} else if (separetedLine[1].equals("listabsent")){
+					result=listabsent_command(separetedLine[0]);
+				} else if (separetedLine[1].equals("info")){
 					result=info_command(separetedLine[0],separetedLine[2]);
 				} 
 				if("Successful shutdown".equals(result)){

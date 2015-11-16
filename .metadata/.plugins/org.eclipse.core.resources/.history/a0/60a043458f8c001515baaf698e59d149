@@ -4,7 +4,6 @@ package socketexam;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Client {
@@ -51,20 +50,15 @@ public class Client {
 	
 	public String info_command(String name,String lookingFor){
 		String result="";
-		User user = server.getallusers().get(lookingFor);		
+		User user = server.getallusers().get(lookingFor);
 		if(user!=null){
-			result = "ok:"+lookingFor+":"+user.isItLoged()+":"+user.getHowTimesIsLogin()+":";
 			if(user.isItLoged()){
 				result+=user.allTimes();
-			} else {
-				return "error:notlogged";
 			}
 			return result;
 		}		
-		return "ok:"+lookingFor+":false:0";
+		return "error:notlogged";
 	}
-	
-	
 	
 	public void run() {
 		try {
@@ -83,7 +77,7 @@ public class Client {
 					result=logout_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("shutdown")){
 					result=shutdown_command(separetedLine[0]);
-				}  else if (separetedLine[1].equals("info")){
+				} else if (separetedLine[1].equals("info")){
 					result=info_command(separetedLine[0],separetedLine[2]);
 				} 
 				if("Successful shutdown".equals(result)){

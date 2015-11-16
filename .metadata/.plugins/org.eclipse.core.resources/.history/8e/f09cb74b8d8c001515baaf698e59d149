@@ -4,7 +4,6 @@ package socketexam;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Client {
@@ -48,23 +47,26 @@ public class Client {
 		}		
 		return"error:notlogged";
 	}
-	
-	public String info_command(String name,String lookingFor){
-		String result="";
-		User user = server.getallusers().get(lookingFor);		
-		if(user!=null){
-			result = "ok:"+lookingFor+":"+user.isItLoged()+":"+user.getHowTimesIsLogin()+":";
-			if(user.isItLoged()){
-				result+=user.allTimes();
+	/*
+	public static void info_command(String name,String lookingFor) throws IOException{
+		final PrintStream out =	new PrintStream(socket.getOutputStream());
+		if(currentlyLoggedUsers.contains(name)){
+			String displayInfo="ok:"+lookingFor;
+			if(currentlyLoggedUsers.contains(lookingFor)){
+				displayInfo+=":true:";
 			} else {
-				return "error:notlogged";
+				displayInfo+=":false:";
+			};
+			if(usersToLoginCount.get(lookingFor)==null){
+				displayInfo+="0";
+			} else {
+				displayInfo+=usersToLoginCount.get(lookingFor);
 			}
-			return result;
-		}		
-		return "ok:"+lookingFor+":false:0";
-	}
-	
-	
+			out.println(displayInfo);
+		} else {
+			out.println("error:notlogged");	
+		}	
+	}*/
 	
 	public void run() {
 		try {
@@ -83,8 +85,8 @@ public class Client {
 					result=logout_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("shutdown")){
 					result=shutdown_command(separetedLine[0]);
-				}  else if (separetedLine[1].equals("info")){
-					result=info_command(separetedLine[0],separetedLine[2]);
+				} else if (separetedLine[1].equals("info")){
+					//info_command(separetedLine[0],separetedLine[2]);
 				} 
 				if("Successful shutdown".equals(result)){
 					break;

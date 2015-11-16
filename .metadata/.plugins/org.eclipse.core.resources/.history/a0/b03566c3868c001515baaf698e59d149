@@ -1,7 +1,6 @@
 package socketexam;
 
 import java.net.Socket;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,10 +9,13 @@ public class User {
 	private String name;
 	private boolean isItLogin;
 	private int howTimesIsLogin;
-	private Interval whenIsIn;
+	public Interval whenIsIn;
 	private Socket socket;
 	private List<Interval> times = new LinkedList<Interval>();
 	
+	public Interval time (Interval whenIsIn){
+		return whenIsIn;		
+	}
 	
 	public User(String name, Socket socket){
 		this.name=name;
@@ -41,29 +43,6 @@ public class User {
 	
 	public boolean isItLoged(){
 		return isItLogin;		
-	}
-	
-	public String allTimes(){
-		String allDates="";
-		for(int i=0;i<times.size();i++){
-			allDates+=formatTime(times.get(i).getFrom());
-			allDates+=":";
-			allDates+=formatTime(times.get(i).getFrom());
-		}		
-		return allDates;
-	}
-	
-	public int getHowTimesIsLogin() {
-		return howTimesIsLogin;
-	}
-	
-	public String formatTime(Date time){
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH'_'mm'_'ss.SSSZ");
-		return dateformat.format(time);
-	}
-	
-	public String getName() {
-		return name;
 	}
 	
 }
