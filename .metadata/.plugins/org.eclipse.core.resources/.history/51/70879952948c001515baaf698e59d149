@@ -76,9 +76,9 @@ public class Client {
 					}
 				}
 				return result;	
-			}			
+			}	
+			return "error:notlogged";
 		}
-		return "error:notlogged";
 		
 	}
 	
