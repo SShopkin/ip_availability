@@ -4,7 +4,6 @@ package socketexam;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,34 +14,33 @@ public class Client {
 	private static final String COMMAND_STOP_SERVER = "stopServer";
 	static List<String> currentlyLoggedUsers = new LinkedList<String>();
 	static Map<String, Integer> usersToLoginCount = new HashMap<String, Integer>();
-	
-	//private Map<String, User> allusers = Collections.synchronizedMap(new HashMap<String, User>()); 
 
-	private Server server;
-	
+	private static Socket socket;
 
-	private Socket socket;
-
-	public Client(Socket socket, Server server) {
-		this.socket = socket;
-		this.server = server;
+	public Client(Socket socket) {
+		Client.socket = socket;
 	}
 	
 	
 	
-	public String login_command(String name) {
-		
-		//final PrintStream out =	new PrintStream(socket.getOutputStream());
-		if(server.getallusers().containsKey(name)){
-			
+	public static void login_command(String name) throws IOException{
+		final PrintStream out =	new PrintStream(socket.getOutputStream());
+		if(usersToLoginCount.get(name)==null){
+			usersToLoginCount.put(name,1);
+			currentlyLoggedUsers.add(name);
+			out.print("ok\n");
+		} else if(currentlyLoggedUsers.contains(name)) {
+			out.println("error:already logged");			
 		} else {
-			
+			Integer a=usersToLoginCount.get(name);
+			a+=1;
+			usersToLoginCount.put(name,a);
+			currentlyLoggedUsers.add(name);
+			out.print("ok\n");
 		}
-		return "ok";
-
 	}
 	
-	/*public static void logout_command(String name) throws IOException{
+	public static void logout_command(String name) throws IOException{
 		final PrintStream out =	new PrintStream(socket.getOutputStream());
 		if(currentlyLoggedUsers.contains(name)){
 			currentlyLoggedUsers.remove(name);
@@ -70,7 +68,7 @@ public class Client {
 		} else {
 			out.println("error:notlogged");	
 		}	
-	}*/
+	}
 	
 	public void run() {
 		try {
@@ -85,9 +83,9 @@ public class Client {
 				if (separetedLine[1].equals("login")) {
 					login_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("logout")){
-					//logout_command(separetedLine[0]);
+					logout_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("info")){
-					//info_command(separetedLine[0],separetedLine[2]);
+					info_command(separetedLine[0],separetedLine[2]);
 				} else {
 					out.println("error:unknowncommand");
 				}							

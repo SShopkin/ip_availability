@@ -10,9 +10,6 @@ public class Server {
 	private final int port;
 	private Map<String, User> allusers = Collections.synchronizedMap(new HashMap<String, User>()); 
 
-	public Map<String, User> getallusers(){
-		return allusers;
-	}
 	public Server(int port) {
 		this.port = port;
 	}
@@ -20,7 +17,7 @@ public class Server {
 	public void startServer() throws IOException {
 		final ServerSocket serverSocket = new ServerSocket(port);
 		final Socket socket = serverSocket.accept();		
-		final Client client = new Client(socket,this);
+		final Client client = new Client(socket);
 		
 		client.run();		
 		serverSocket.close();

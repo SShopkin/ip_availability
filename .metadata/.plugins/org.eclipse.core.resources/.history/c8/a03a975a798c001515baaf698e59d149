@@ -35,8 +35,6 @@ public class Client {
 		//final PrintStream out =	new PrintStream(socket.getOutputStream());
 		if(server.getallusers().containsKey(name)){
 			
-		} else {
-			
 		}
 		return "ok";
 
@@ -85,9 +83,9 @@ public class Client {
 				if (separetedLine[1].equals("login")) {
 					login_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("logout")){
-					//logout_command(separetedLine[0]);
+					logout_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("info")){
-					//info_command(separetedLine[0],separetedLine[2]);
+					info_command(separetedLine[0],separetedLine[2]);
 				} else {
 					out.println("error:unknowncommand");
 				}							
