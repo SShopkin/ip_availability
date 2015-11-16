@@ -94,7 +94,6 @@ public class Client {
 					//info_command(separetedLine[0],separetedLine[2]);
 				} 
 				out.println(result);
-				result="error:unknowncommand";
 			}
 			scanner.close();
 			out.close();

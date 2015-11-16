@@ -11,7 +11,7 @@ public class User {
 	private int howTimesIsLogin;
 	private Interval whenIsIn;
 	private Socket socket;
-	private List<Interval> times = new LinkedList<Interval>();
+	private List<Interval> invited = new LinkedList<Interval>();
 	
 	public User(String name, Socket socket){
 		this.name=name;
@@ -24,15 +24,12 @@ public class User {
 	
 	public void stopSession(){
 		isItLogin = false;
-		whenIsIn.setTo(new Date(System.currentTimeMillis()));
-		times.add(whenIsIn);
 	}
 	
 	public void beginSession(){
 		isItLogin = true;
 		howTimesIsLogin += 1;
-		whenIsIn = new Interval();
-		whenIsIn.setFrom(new Date(System.currentTimeMillis()));
+		
 	}
 	
 }

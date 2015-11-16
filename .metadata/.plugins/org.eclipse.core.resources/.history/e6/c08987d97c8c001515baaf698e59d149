@@ -90,11 +90,10 @@ public class Client {
 					
 				} else if (separetedLine[1].equals("logout")){
 					//logout_command(separetedLine[0]);
-				} else if (separetedLine[1].equals("info")){
+				} else (separetedLine[1].equals("info")){
 					//info_command(separetedLine[0],separetedLine[2]);
 				} 
 				out.println(result);
-				result="error:unknowncommand";
 			}
 			scanner.close();
 			out.close();
