@@ -52,7 +52,7 @@ public class Client implements Runnable{
 	public String info_command(String name,String lookingFor){
 		String result="";
 		User user = server.getallusers().get(lookingFor);
-		User mainUser = server.getallusers().get(name);
+		User mainUser = server.getallusers().get(lookingFor);
 		if(user!=null){
 			result = "ok:"+lookingFor+":"+user.isItLoged()+":"+user.getHowTimesIsLogin()+":";
 			if(mainUser.isItLoged()){
