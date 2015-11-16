@@ -39,20 +39,19 @@ public class Client {
 			server.getallusers().put(name, new User(name,socket));
 		}
 		return "ok";
+
 	}
 	
-	
-	
-	public String logout_command(String name) throws IOException{
-		User user = server.getallusers().get(name);
-		if(user.isItLoged()){
-			user.stopSession();
-			return "ok";
+	/*public static void logout_command(String name) throws IOException{
+		final PrintStream out =	new PrintStream(socket.getOutputStream());
+		if(currentlyLoggedUsers.contains(name)){
+			currentlyLoggedUsers.remove(name);
+			out.print("ok\n");
 		} else {
-			return"error:notlogged";	
+			out.println("error:notlogged");	
 		}		
 	}
-	/*
+	
 	public static void info_command(String name,String lookingFor) throws IOException{
 		final PrintStream out =	new PrintStream(socket.getOutputStream());
 		if(currentlyLoggedUsers.contains(name)){
@@ -85,9 +84,11 @@ public class Client {
 				}
 				final String separetedLine[]=line.split(":");
 				if (separetedLine[1].equals("login")) {
-					result=login_command(separetedLine[0]);					
+					result=login_command(separetedLine[0]);
+					
+					
 				} else if (separetedLine[1].equals("logout")){
-					result=logout_command(separetedLine[0]);
+					//logout_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("info")){
 					//info_command(separetedLine[0],separetedLine[2]);
 				} 

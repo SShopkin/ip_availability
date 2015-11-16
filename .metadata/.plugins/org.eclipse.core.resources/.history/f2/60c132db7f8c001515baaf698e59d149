@@ -23,11 +23,9 @@ public class User {
 	}
 	
 	public void stopSession(){
-		if(isItLogin){
-			isItLogin = false;
-			whenIsIn.setTo(new Date(System.currentTimeMillis()));
-			times.add(whenIsIn);
-		}
+		isItLogin = false;
+		whenIsIn.setTo(new Date(System.currentTimeMillis()));
+		times.add(whenIsIn);
 	}
 	
 	public void beginSession(){

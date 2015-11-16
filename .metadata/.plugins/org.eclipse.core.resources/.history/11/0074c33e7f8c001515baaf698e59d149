@@ -87,7 +87,7 @@ public class Client {
 				if (separetedLine[1].equals("login")) {
 					result=login_command(separetedLine[0]);					
 				} else if (separetedLine[1].equals("logout")){
-					result=logout_command(separetedLine[0]);
+					//logout_command(separetedLine[0]);
 				} else if (separetedLine[1].equals("info")){
 					//info_command(separetedLine[0],separetedLine[2]);
 				} 
