@@ -59,9 +59,11 @@ public class Client implements Runnable{
 		User user = server.getallusers().get(lookingFor);
 		User mainUser = server.getallusers().get(name);
 		if((user!=null)&&(mainUser!=null)&&(mainUser.isItLoged())){
-			result = "ok:"+lookingFor+":"+user.isItLoged()+":"+user.getHowTimesIsLogin();			
-			if(!user.isItLoged()) result+=":"+user.allTimes();
-			return result;
+			result = "ok:"+lookingFor+":"+user.isItLoged()+":"+user.getHowTimesIsLogin();
+			if (!user.isItLoged()){
+				result+=":"+user.allTimes();
+				return result;
+			}
 			} else if((mainUser!=null)&&(mainUser.isItLoged())) {
 				return "ok:"+lookingFor+":false:0";
 			}

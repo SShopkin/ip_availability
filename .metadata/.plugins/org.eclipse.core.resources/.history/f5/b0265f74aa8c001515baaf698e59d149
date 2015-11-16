@@ -58,13 +58,15 @@ public class Client implements Runnable{
 		String result="";
 		User user = server.getallusers().get(lookingFor);
 		User mainUser = server.getallusers().get(name);
-		if((user!=null)&&(mainUser!=null)&&(mainUser.isItLoged())){
-			result = "ok:"+lookingFor+":"+user.isItLoged()+":"+user.getHowTimesIsLogin();			
-			if(!user.isItLoged()) result+=":"+user.allTimes();
-			return result;
-			} else if((mainUser!=null)&&(mainUser.isItLoged())) {
+		if(user!=null){
+			result = "ok:"+lookingFor+":"+user.isItLoged()+":"+user.getHowTimesIsLogin()+":";
+			if(mainUser.isItLoged()){
+				result+=user.allTimes();
+			} else {
 				return "ok:"+lookingFor+":false:0";
 			}
+			return result;
+		}
 		return "error:notlogged";		
 	}
 	
